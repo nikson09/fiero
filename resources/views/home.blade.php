@@ -1,40 +1,25 @@
 @extends('layouts.app')
 
 @section('style')
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 
 @endsection
 
 @section('content')
     <main class="body" id="main-content" role="main" data-currency-code="USD">
-        <div class="container--heroCarousel">
-            <section class="heroCarousel slick-initialized slick-slider" data-slick="{
-            &quot;arrows&quot;: true,
-            &quot;mobileFirst&quot;: true,
-            &quot;slidesToShow&quot;: 1,
-            &quot;slidesToScroll&quot;: 1,
-            &quot;fade&quot;: true,
-            &quot;autoplay&quot;: true,
-            &quot;autoplaySpeed&quot;: 5000,
-            &quot;slide&quot;: &quot;[data-hero-slide]&quot;
-        }">
-                <div aria-live="polite" class="slick-list draggable">
-                    <div class="slick-track" style="opacity: 1; width: 1270px;">
-                        <div class="slick-slide slick-current slick-active" aria-hidden="false" style="width: 1270px; position: relative; left: 0px; top: 0px; z-index: 999; opacity: 1;">
-                            <div class="heroCarousel-slide  heroCarousel-slide--first">
-                                <div class="heroCarousel-image-wrapper">
-                                    <img class="heroCarousel-image-mobile" src="https://cdn11.bigcommerce.com/s-jpzrvmsc69/product_images/uploaded_images/2fer-140-kilos-banner-mobile.png" alt="">
-                                    <img src="https://cdn11.bigcommerce.com/s-jpzrvmsc69/images/stencil/1280w/carousel/31/2fer-140-kilos-banner-dsk.png?c=1" alt="" title="" data-sizes="auto" srcset="https://cdn11.bigcommerce.com/s-jpzrvmsc69/images/stencil/80w/carousel/31/2fer-140-kilos-banner-dsk.png?c=1 80w, https://cdn11.bigcommerce.com/s-jpzrvmsc69/images/stencil/160w/carousel/31/2fer-140-kilos-banner-dsk.png?c=1 160w, https://cdn11.bigcommerce.com/s-jpzrvmsc69/images/stencil/320w/carousel/31/2fer-140-kilos-banner-dsk.png?c=1 320w, https://cdn11.bigcommerce.com/s-jpzrvmsc69/images/stencil/640w/carousel/31/2fer-140-kilos-banner-dsk.png?c=1 640w, https://cdn11.bigcommerce.com/s-jpzrvmsc69/images/stencil/960w/carousel/31/2fer-140-kilos-banner-dsk.png?c=1 960w, https://cdn11.bigcommerce.com/s-jpzrvmsc69/images/stencil/1280w/carousel/31/2fer-140-kilos-banner-dsk.png?c=1 1280w, https://cdn11.bigcommerce.com/s-jpzrvmsc69/images/stencil/1900w/carousel/31/2fer-140-kilos-banner-dsk.png?c=1 1900w" class=" heroCarousel-image">
-                                </div>
-                                <div class="heroCarousel-content">
-                                    <span class="heroCarousel-title">KILO BUCKETS</span>
-                                    <p class="heroCarousel-description">ANY 2 FOR $140</p>
-                                    <a href="/hookah-tobacco/" aria-label="Slide number 1, SHOP NOW" class="heroCarousel-action button button--tertiary av button--large" tabindex="0">SHOP NOW</a>
-                                </div>
-                            </div>
-                        </div>
+    <div class="container--heroCarousel">
+            <div class="heroCarousel">
+                @foreach($banners as $banner)
+                <div class="heroCarousel-slide  heroCarousel-slide--first">
+                    <div class="heroCarousel-image-wrapper">
+                        <img class="heroCarousel-image-mobile" src="{{ asset('storage/'.$banner->image_path) }}" alt="">
+                        <div style="background: url({{ asset('storage/'.$banner->image_path) }}) round" 
+                             alt="" title="" data-sizes="auto" class="heroCarousel-image">
+</div>
                     </div>
                 </div>
-            </section>
+                @endforeach
+            </div>
         </div>
         <div class="main full">
             <div class="halo-block halo-block-product halo-block-product-tabs padding-top-30 padding-bottom-50">
@@ -1077,6 +1062,7 @@ Now:$10.50
 
     @section('scripts')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script>
         $(document).ready(function() {
             // Find the Ukraine path by its class and add highlight class
@@ -1108,6 +1094,13 @@ Now:$10.50
                     });
                 }
             );
+        });
+        $('.heroCarousel').slick({
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          autoplay: true,
+          autoplaySpeed: 2000,
+          arrows: false
         });
     </script>
     <style>
