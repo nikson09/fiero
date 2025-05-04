@@ -36,10 +36,6 @@
                 </div>
             </section>
         </div>
-        <div style="width:100%; max-width:1200px; margin:40px auto;">
-            <div id="map" style="width: 100%; height: 400px;"></div>
-            <div style="text-align:center;margin-top:10px;font-size:1.1em;">Оранжевым отмечены страны, где есть наш товар</div>
-        </div>
         <div class="main full">
             <div class="halo-block halo-block-product halo-block-product-tabs padding-top-30 padding-bottom-50">
                 <div class="container">
@@ -556,7 +552,7 @@ Now:$10.50
                                                     </div>
                                                 </article>
                                             </div>
-                                            <div data-product-slide="" class="productCarousel-slide" style="width: 278px;" data-slick-index="5" aria-hidden="true">
+                                            <div data-product-slide="" class="productCarousel-slide slick-slide" style="width: 278px;" data-slick-index="5" aria-hidden="true">
                                                 <article class="card
     " data-product-id="148" data-test="card-148">
                                                     <figure class="card-figure">
@@ -648,7 +644,7 @@ Now:$10.50
                                                     </div>
                                                 </article>
                                             </div>
-                                            <div data-product-slide="" class="productCarousel-slide" style="width: 278px;" data-slick-index="6" aria-hidden="true">
+                                            <div data-product-slide="" class="productCarousel-slide slick-slide" style="width: 278px;" data-slick-index="6" aria-hidden="true">
                                                 <article class="card
     " data-product-id="133" data-test="card-133">
                                                     <figure class="card-figure">
@@ -740,7 +736,7 @@ Now:$10.50
                                                     </div>
                                                 </article>
                                             </div>
-                                            <div data-product-slide="" class="productCarousel-slide" style="width: 278px;" data-slick-index="7" aria-hidden="true">
+                                            <div data-product-slide="" class="productCarousel-slide slick-slide" style="width: 278px;" data-slick-index="7" aria-hidden="true">
                                                 <article class="card
     " data-product-id="121" data-test="card-121">
                                                     <figure class="card-figure">
@@ -1072,46 +1068,55 @@ Now:$10.50
                 </div>
             </div>
         </div>
+        <div style="width:100%; max-width:1200px; margin:40px auto;">
+            <h2 class="section-title" style="text-align: center; margin-bottom: 20px; font-size: 2em; color: #333; font-weight: 600;">Our Global Reach</h2>
+            <p style="text-align: center; margin-bottom: 30px; font-size: 1.1em; color: #666;">Our products are available for purchase in the following countries</p>
+            @include('layouts.map')
+        </div>
     </main>
 
     @section('scripts')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.5/jquery-jvectormap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.5/jquery-jvectormap-world-mill.min.js"></script>
     <script>
         $(document).ready(function() {
-          console.log('ready');
-            $('#map').vectorMap({
-                map: 'world_mill',
-                backgroundColor: '#ffffff',
-                regionStyle: {
-                    initial: {
-                        fill: '#e0e0e0',
-                        stroke: '#ffffff',
-                        "stroke-width": 1,
-                        "stroke-opacity": 1
-                    },
-                    hover: {
-                        fill: '#ffa500',
-                        "fill-opacity": 0.8
-                    }
-                },
-                series: {
-                    regions: [{
-                        values: {
-                            UA: '#ffa500' // Ukraine
-                        }
-                    }]
-                },
-                onRegionTipShow: function(event, tip, code) {
-                    if (code === 'UA') {
-                        tip.html('Украина - Доступно');
-                    } else {
-                        tip.html('Скоро будет доступно');
-                    }
-                }
+            // Find the Ukraine path by its class and add highlight class
+            const ukrainePath = $('path.UA');
+            
+            // Set initial styles
+            ukrainePath.css({
+                'fill': '#FFA500',
+                'stroke': '#FFA500',
+                'stroke-width': '2px',
+                'cursor': 'pointer',
+                'transition': 'all 0.3s ease'
             });
+
+            // Add hover effects
+            ukrainePath.hover(
+                function() {
+                    $(this).css({
+                        'fill': '#FF8C00',
+                        'stroke': '#FF8C00',
+                        'stroke-width': '3px'
+                    });
+                },
+                function() {
+                    $(this).css({
+                        'fill': '#FFA500',
+                        'stroke': '#FFA500',
+                        'stroke-width': '2px'
+                    });
+                }
+            );
         });
     </script>
-    @endsection
+    <style>
+        /* Make all other countries darker gray */
+        path:not(.UA) {
+            fill: #A0A0A0 !important;
+            stroke: #808080 !important;
+            stroke-width: 1px !important;
+        }
+    </style>
+@endsection
 @endsection
